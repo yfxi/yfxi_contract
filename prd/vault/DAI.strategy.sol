@@ -123,6 +123,7 @@ library SafeERC20 {
 interface Controller {
     function vaults(address) external view returns (address);
     function rewards() external view returns (address);
+    function community() external view returns (address);
 }
 
 /*
@@ -188,10 +189,10 @@ contract Strategy {
     address constant public weth = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
     address constant public dai = address(0x6B175474E89094C44Da98b954EedeAC495271d0F);
     address constant public ycrv = address(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
-    //团队yfxi分红比例 6%
-    uint public fee = 600;
-    //销毁的yfxi比例 3%
-    uint public burnfee = 300;
+    //团队yfxi分红比例 5%
+    uint public fee = 500;
+    //社区治理fee 4%
+    uint public communityFee = 400;
     //帮助触发收获的人奖励比例 1%
     uint public callfee = 100;
     uint constant public max = 10000;
@@ -296,10 +297,10 @@ contract Strategy {
         uint b = IERC20(yfxi).balanceOf(address(this));
         uint _fee = b.mul(fee).div(max);
         uint _callfee = b.mul(callfee).div(max);
-        uint _burnfee = b.mul(burnfee).div(max);
-        IERC20(yfxi).safeTransfer(Controller(controller).rewards(), _fee); //6%  5% team +1% insurance
+        uint _communityFee = b.mul(communityFee).div(max);
+        IERC20(yfxi).safeTransfer(Controller(controller).rewards(), _fee); //5% team
         IERC20(yfxi).safeTransfer(msg.sender, _callfee); //call fee 1%
-        IERC20(yfxi).safeTransfer(address(0x6666666666666666666666666666666666666666), _burnfee); //burn fee 3%
+        IERC20(yfxi).safeTransfer(Controller(controller).community(), _communityFee); //community fee 4%
 
         //把yfxi 存进去分红.
         IERC20(yfxi).safeApprove(_vault, 0);
@@ -349,9 +350,9 @@ contract Strategy {
         require(msg.sender == governance, "!governance");
         callfee = _fee;
     }    
-    function setBurnFee(uint256 _fee) external{
+    function setCommunityFee(uint256 _fee) external{
         require(msg.sender == governance, "!governance");
-        burnfee = _fee;
+        communityFee = _fee;
     }
     function setSwapRouting(address[] memory _path) public{
         require(msg.sender == governance, "!governance");

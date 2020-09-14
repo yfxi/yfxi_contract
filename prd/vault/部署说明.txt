@@ -2,6 +2,7 @@
 1. 部署YFXI(已在Stake部署时部署)
 2. 部署 Controller.sol
     a. 设置 分红账户地址 controller.sol:353
+    b. 设置 社区账户地址 Controller.sol:181
 3. 修改 yvault.sol 配置
     a. 设置 yfxi 代币地址 yvault.sol:306
     b. 设置 controller 地址 yvault.sol:318
@@ -12,7 +13,7 @@
     b.  修改 DAI.strategy.sol
         aa. 设置yfxi地址 DAI.strategy.sol:186
         ab. 设置 controller 地址 DAI.strategy.sol:209
-        ac. 默认分红比例 团队6%, 触发人1%, 销毁3%, 如需调整参考 DAI.strategy.sol:191
+        ac. 默认分红比例 团队5%, 触发人1%, 社区3%, 如需调整参考 DAI.strategy.sol:191
     c. 部署 DAI.strategyContractAddress 源文件为 DAI.strategy.sol
         aa. _output 为 ZOMBIE Token 的地址 0xd55bd2c12b30075b325bc35aef0b46363b3818f8
         ab. _pool 为 ZOMBIE DAI Pool 的地址 0x66c58b0ed9f987c19177aa5949c3100beda982f5
@@ -27,7 +28,7 @@
     b.  修改 YCRV.strategy.sol
         aa. 设置yfxi地址 YCRV.strategy.sol:162
         ab. 设置 controller 地址 YCRV.strategy.sol:183
-        ac. 默认分红比例 团队6%, 触发人1%, 销毁3%, 如需调整参考 YCRV.strategy.sol:165
+        ac. 默认分红比例 团队5%, 触发人1%, 社区3%, 如需调整参考 YCRV.strategy.sol:165
         ad. 设置质押池 YearnRewards.sol 的地址, 质押池已经部署 YCRV.strategy.sol:186
     c. 部署 YCRV.strategyContractAddress 源文件为 YCRV.strategy.sol
     d. 在 Controller 中设置 vaults 和 strategies 对应关系
@@ -40,7 +41,7 @@
     b.  修改 CCRV.strategy.sol
         aa. 设置yfxi地址 CCRV.strategy.sol:172
         ab. 设置 controller 地址 CCRV.strategy.sol:196
-        ac. 默认分红比例 团队6%, 触发人1%, 销毁3%, 如需调整参考 CCRV.strategy.sol:179
+        ac. 默认分红比例 团队5%, 触发人1%, 社区3%, 如需调整参考 CCRV.strategy.sol:179
     c. 部署 CCRV.strategyContractAddress 源文件为 CCRV.strategy.sol
         aa. _want 为 cCrv 的地址 0x845838df265dcd2c412a1dc9e959c7d08537f8a2
         ab. _pool 为 cCrv Gauge 的地址 0x7ca5b0a2910b33e9759dc7ddb0413949071d7575
@@ -54,7 +55,7 @@
     b.  修改 WETH.strategy.sol
         aa. 设置yfxi地址 WETH.strategy.sol:204
         ab. 设置 controller 地址 WETH.strategy.sol:231
-        ac. 默认分红比例 团队6%, 触发人1%, 销毁3%, 如需调整参考 WETH.strategy.sol:213
+        ac. 默认分红比例 团队5%, 触发人1%, 社区3%, 如需调整参考 WETH.strategy.sol:213
     c. 部署 WETH.strategyContractAddress 源文件为 WETH.strategy.sol
         aa. _output 为 Grap Token 的地址 0xc8d2ab2a6fdebc25432e54941cb85b55b9f152db
         ab. _pool 为 Grap WETH Pool 的地址 0x3e80d57929e177ebc0bbf6a08f98ea20d9b5c3e0
@@ -69,7 +70,7 @@
     b.  修改 LINK.strategy.sol
         aa. 设置yfxi地址 LINK.strategy.sol:186
         ab. 设置 controller 地址 LINK.strategy.sol:209
-        ac. 默认分红比例 团队6%, 触发人1%, 销毁3%, 如需调整参考 LINK.strategy.sol:191
+        ac. 默认分红比例 团队5%, 触发人1%, 社区3%, 如需调整参考 LINK.strategy.sol:191
     c. 部署 LINK.strategyContractAddress 源文件为 LINK.strategy.sol
         aa. _output 为 Grap Token 的地址 0xc8d2ab2a6fdebc25432e54941cb85b55b9f152db
         ab. _pool 为 Grap LINK Pool 的地址 0x2e0c963006c8307944cad83f2653936516126bdf

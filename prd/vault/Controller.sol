@@ -163,6 +163,7 @@ contract Controller {
     address public governance;
     address public onesplit;
     address public rewards;
+    address public community;
     address public factory;
     mapping(address => address) public vaults;
     mapping(address => address) public strategies;
@@ -175,7 +176,9 @@ contract Controller {
         governance = tx.origin;
         onesplit = address(0x50FDA034C0Ce7a8f7EFDAebDA7Aa7cA21CC1267e);
         //TODO 设置 分红账户地址
-        rewards = 0x887F507EaAc58adD20263C6918538A9BdC882d47; 
+        rewards = 0x887F507EaAc58adD20263C6918538A9BdC882d47;
+        //TODO 设置 社区账户地址
+        community = 0x887F507EaAc58adD20263C6918538A9BdC882d47;
     }
     
     function setFactory(address _factory) public {
