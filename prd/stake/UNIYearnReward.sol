@@ -204,7 +204,7 @@ pragma solidity ^0.5.0;
 contract Context {
     // Empty internal constructor, to prevent people from mistakenly deploying
     // an instance of this contract, which should be used via inheritance.
-    constructor () internal { }
+    constructor () internal {}
     // solhint-disable-previous-line no-empty-blocks
 
     function _msgSender() internal view returns (address payable) {
@@ -212,7 +212,8 @@ contract Context {
     }
 
     function _msgData() internal view returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        this;
+        // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
     }
 }
@@ -322,6 +323,7 @@ interface IERC20 {
      * Emits a {Transfer} event.
      */
     function transfer(address recipient, uint256 amount) external returns (bool);
+
     function mint(address account, uint amount) external;
 
     /**
@@ -405,7 +407,7 @@ library Address {
         bytes32 codehash;
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
-        assembly { codehash := extcodehash(account) }
+        assembly {codehash := extcodehash(account)}
         return (codehash != 0x0 && codehash != accountHash);
     }
 
@@ -441,7 +443,7 @@ library Address {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
         // solhint-disable-next-line avoid-call-value
-        (bool success, ) = recipient.call.value(amount)("");
+        (bool success,) = recipient.call.value(amount)("");
         require(success, "Address: unable to send value, recipient may have reverted");
     }
 }
@@ -516,7 +518,7 @@ library SafeERC20 {
         (bool success, bytes memory returndata) = address(token).call(data);
         require(success, "SafeERC20: low-level call failed");
 
-        if (returndata.length > 0) { // Return data is optional
+        if (returndata.length > 0) {// Return data is optional
             // solhint-disable-next-line max-line-length
             require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
         }
@@ -526,7 +528,6 @@ library SafeERC20 {
 // File: contracts/IRewardDistributionRecipient.sol
 
 pragma solidity ^0.5.0;
-
 
 
 contract IRewardDistributionRecipient is Ownable {
@@ -540,8 +541,8 @@ contract IRewardDistributionRecipient is Ownable {
     }
 
     function setRewardDistribution(address _rewardDistribution)
-        external
-        onlyOwner
+    external
+    onlyOwner
     {
         rewardDistribution = _rewardDistribution;
     }
@@ -552,15 +553,11 @@ contract IRewardDistributionRecipient is Ownable {
 pragma solidity ^0.5.0;
 
 
-
-
-
-
 contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public y = IERC20(0x6f259637dcD74C767781E37Bc6133cd6A68aa161); // 质押代币地址
+    IERC20 public y = IERC20(0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984); // 质押代币地址
     address constant public teamReward = address(0x96ec78f1d3fE9F6dE7fa1CA3c2228CB9503f9768); //TODO 团队奖励
 
     uint256 private _totalSupply;
@@ -593,10 +590,10 @@ contract LPTokenWrapper {
 
 contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public yfi = IERC20(0xcb00892dDedeF6e5904c9984a5702a1cD0B9003B); //TODO yfxi 地址
-    uint256 public constant DURATION = 1 days;
+    uint256 public constant DURATION = 3 days;
 
-    uint256 public initreward = 10000*1e18;
-    uint256 public starttime = 1600012800; //utc+8 2020 09-14 0:00:00
+    uint256 public initreward = 500 * 1e18; //初始 500个
+    uint256 public starttime = 1601654400; //utc+8 2020-10-03 00:00:00
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -629,31 +626,31 @@ contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
             return rewardPerTokenStored;
         }
         return
-            rewardPerTokenStored.add(
-                lastTimeRewardApplicable()
-                    .sub(lastUpdateTime)
-                    .mul(rewardRate)
-                    .mul(1e18)
-                    .div(totalSupply())
-            );
+        rewardPerTokenStored.add(
+            lastTimeRewardApplicable()
+            .sub(lastUpdateTime)
+            .mul(rewardRate)
+            .mul(1e18)
+            .div(totalSupply())
+        );
     }
 
     function earned(address account) public view returns (uint256) {
         return
-            balanceOf(account)
-                .mul(rewardPerToken().sub(userRewardPerTokenPaid[account]))
-                .div(1e18)
-                .add(rewards[account]);
+        balanceOf(account)
+        .mul(rewardPerToken().sub(userRewardPerTokenPaid[account]))
+        .div(1e18)
+        .add(rewards[account]);
     }
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
-    function stake(uint256 amount) public updateReward(msg.sender) checkhalve checkStart{ 
+    function stake(uint256 amount) public updateReward(msg.sender) checkhalve checkStart {
         require(amount > 0, "Cannot stake 0");
         super.stake(amount);
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public updateReward(msg.sender) checkhalve checkStart{
+    function withdraw(uint256 amount) public updateReward(msg.sender) checkhalve checkStart {
         require(amount > 0, "Cannot withdraw 0");
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
@@ -664,7 +661,7 @@ contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
         getReward();
     }
 
-    function getReward() public updateReward(msg.sender) checkhalve checkStart{
+    function getReward() public updateReward(msg.sender) checkhalve checkStart {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
@@ -678,8 +675,8 @@ contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
 
     modifier checkhalve(){
         if (block.timestamp >= periodFinish) {
-            initreward = initreward.mul(50).div(100); 
-            yfi.mint(address(this),initreward);
+            initreward = initreward.mul(50).div(100);
+            yfi.mint(address(this), initreward);
 
             rewardRate = initreward.div(DURATION);
             periodFinish = block.timestamp.add(DURATION);
@@ -688,14 +685,14 @@ contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
         _;
     }
     modifier checkStart(){
-        require(block.timestamp > starttime,"not start");
+        require(block.timestamp > starttime, "not start");
         _;
     }
 
     function notifyRewardAmount(uint256 reward)
-        external
-        onlyRewardDistribution
-        updateReward(address(0))
+    external
+    onlyRewardDistribution
+    updateReward(address(0))
     {
         if (block.timestamp >= periodFinish) {
             rewardRate = reward.div(DURATION);
@@ -704,7 +701,7 @@ contract UNIYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
             uint256 leftover = remaining.mul(rewardRate);
             rewardRate = reward.add(leftover).div(DURATION);
         }
-        yfi.mint(address(this),reward);
+        yfi.mint(address(this), reward);
         lastUpdateTime = block.timestamp;
         periodFinish = block.timestamp.add(DURATION);
         emit RewardAdded(reward);

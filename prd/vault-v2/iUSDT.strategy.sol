@@ -183,7 +183,7 @@ contract StrategyFortube {
     address constant public weth = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2); // used for for <> weth <> usdc route
 
     //TODO 设置 yfxi 代币地址
-    address constant public yfxi = address(0x550FB60524bc6115108289E1048757B81688e362);
+    address constant public yfxi = address(0xcb00892dDedeF6e5904c9984a5702a1cD0B9003B);
 
 
     address constant public fortube = address(0xdE7B3b2Fe0E7b4925107615A5b199a4EB40D9ca9);//主合约.
@@ -217,7 +217,7 @@ contract StrategyFortube {
     constructor() public {
         governance = msg.sender;
         //TODO 设置 controller
-        controller = 0x915AA7ad4fb3968B439536dDf597eC2E39B5763e;
+        controller = 0xEa0c29FF6201355A475ff081Ea69d1C9C695Ec6c;
         getName = string(
             abi.encodePacked("yfxi:Strategy:",
             abi.encodePacked(IERC20(want).name(),"The Force Token"

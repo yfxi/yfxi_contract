@@ -299,12 +299,12 @@ contract iVault is ERC20, ERC20Detailed {
         tokenAddress = _token;
         governance = tx.origin;
         //TODO 修改controller地址
-        controller = 0xb1635eb091F264eB7B04f5bCBEba9A6D0DB4C844;
+        controller = 0xEa0c29FF6201355A475ff081Ea69d1C9C695Ec6c;
         earnLowerlimit = _earnLowerlimit;
     }
     
     //TODO 设置 yfxi 代币地址
-    address constant public yfxi = address(0x550FB60524bc6115108289E1048757B81688e362);
+    address constant public yfxi = address(0xcb00892dDedeF6e5904c9984a5702a1cD0B9003B);
     address constant public ycrv = address(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
     struct IYfxi {
         uint256 yfxiShares; // 对应的yfxi份额

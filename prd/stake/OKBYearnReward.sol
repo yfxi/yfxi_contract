@@ -1,48 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-07-26
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2020-07-17
-*/
-
-/*
-   ____            __   __        __   _
-  / __/__ __ ___  / /_ / /  ___  / /_ (_)__ __
- _\ \ / // // _ \/ __// _ \/ -_)/ __// / \ \ /
-/___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
-     /___/
-
-* Synthetix: YFIRewards.sol
-*
-* Docs: https://docs.synthetix.io/
-*
-*
-* MIT License
-* ===========
-*
-* Copyright (c) 2020 Synthetix
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-*/
-
-// File: @openzeppelin/contracts/math/Math.sol
-
 pragma solidity ^0.5.0;
 
 /**
@@ -596,17 +551,12 @@ contract IRewardDistributionRecipient is Ownable {
 
 pragma solidity ^0.5.0;
 
-
-
-
-
-
 contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     IERC20 public y = IERC20(0x75231F58b43240C9718Dd58B4967c5114342a86c); // 质押代币地址
-    address constant public teamReward = address(0x7d1c7C0BFDFD3FE9ca7Df95579B9feDE22eE5177); // TODO 团队奖励
+    address constant public teamReward = address(0x96ec78f1d3fE9F6dE7fa1CA3c2228CB9503f9768); // TODO 团队奖励
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -636,12 +586,12 @@ contract LPTokenWrapper {
     }
 }
 
-contract YearnRewards is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public yfi = IERC20(0x550FB60524bc6115108289E1048757B81688e362); //TODO yfxi 地址
-    uint256 public constant DURATION = 7 days;
+contract OKBYearnReward is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public yfi = IERC20(0xcb00892dDedeF6e5904c9984a5702a1cD0B9003B); //TODO yfxi 地址
+    uint256 public constant DURATION = 3 days;
 
-    uint256 public initreward = 10000*1e18;
-    uint256 public starttime = 1599840000; //utc+8 2020 09-12 0:00:00
+    uint256 public initreward = 500*1e18;
+    uint256 public starttime = 1601654400; //utc+8 2020-10-03 00:00:00
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
